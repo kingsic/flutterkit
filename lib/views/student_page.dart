@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterkit/components/dotted_line.dart';
 import 'package:flutterkit/components/get_verification_code.dart';
-import 'package:flutterkit/components/row_radio.dart';
+import 'package:flutterkit/components/rc_radio.dart';
 import 'package:flutterkit/components/star_rating.dart';
 
 class StudentPage extends StatelessWidget {
@@ -27,9 +27,9 @@ class StudentPage extends StatelessWidget {
                 7.7,
               ),
               SizedBox(height: 20),
-              RowRadio(
+              RCRadio(
                 ["单选框", "RowRadio"],
-                style: RadioStyle.previous,
+                radioTextStyle: RadioTextStyle.previous,
                 spacing: 20,
               ),
               SizedBox(height: 20),
