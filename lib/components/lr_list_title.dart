@@ -68,29 +68,29 @@ class LRListTitle extends StatelessWidget {
   final LRListTitleLongPressCallback onLongPress;
 
   const LRListTitle(
-    this.data, {
-    Key key,
-    this.leading,
-    this.leadingIndent = 20,
-    this.leadingEndIndent = 10,
-    this.style,
-    this.titleIndent = 20,
-    this.titleEndIndent = 10,
-    this.trailing,
-    this.subData = "",
-    this.subStyle,
-    this.subTitleIndent = 20,
-    this.subTrailing,
-    this.subTrailingIndent = 10,
-    this.subTrailingEndIndent = 20,
-    this.dividerColor = const Color(0xFFA8A8A8),
-    this.dividerHeight = 0.37,
-    this.dividerIndent = 20,
-    this.dividerEndIndent = 20,
-    this.height = 44,
-    this.onTap,
-    this.onLongPress,
-  }) : super(key: key);
+      this.data, {
+        Key key,
+        this.leading,
+        this.leadingIndent = 20,
+        this.leadingEndIndent = 10,
+        this.style,
+        this.titleIndent = 20,
+        this.titleEndIndent = 10,
+        this.trailing,
+        this.subData = "",
+        this.subStyle,
+        this.subTitleIndent = 20,
+        this.subTrailing,
+        this.subTrailingIndent = 10,
+        this.subTrailingEndIndent = 20,
+        this.dividerColor = const Color(0xFFA8A8A8),
+        this.dividerHeight = 0.37,
+        this.dividerIndent = 20,
+        this.dividerEndIndent = 20,
+        this.height = 44,
+        this.onTap,
+        this.onLongPress,
+      }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -113,10 +113,16 @@ class LRListTitle extends StatelessWidget {
                   ),
                   SizedBox(width: titleEndIndent),
                   trailing == null ? Text("") : trailing,
-                  Expanded(child: Text("")),
-                  Text(
-                    subData,
-                    style: subStyle,
+                  Expanded(
+                      child: Container(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          subData,
+                          style: subStyle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
                   ),
                   SizedBox(width: subTrailing == null ? subTitleIndent : 0),
                   SizedBox(width: subTrailing == null ? 0 : subTrailingIndent),
