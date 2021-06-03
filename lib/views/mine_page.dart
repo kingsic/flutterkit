@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterkit/components/bottom_action_sheet.dart';
 import 'package:flutterkit/components/button.dart';
 import 'package:flutterkit/components/custom_alert_dialog.dart';
 import 'package:flutterkit/components/lr_list_title.dart';
@@ -54,20 +55,29 @@ class MinePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
                 backgroundColor: Colors.green,
                 onTap: () {
-                  showDialog(
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return CustomAlertDialog(
+                  //         title: "温馨提示",
+                  //         message: "您确定要退出登录吗？",
+                  //         cancelTap: () {
+                  //           print("cancel");
+                  //         },
+                  //         sureTap: () {
+                  //           print("sureTap");
+                  //         },
+                  //       );
+                  //     });
+
+                  BottomActionSheet.show(
                       context: context,
-                      builder: (context) {
-                        return CustomAlertDialog(
-                          title: "温馨提示",
-                          message: "您确定要退出登录吗？",
-                          cancelTap: () {
-                            print("cancel");
-                          },
-                          sureTap: () {
-                            print("sureTap");
-                          },
-                        );
-                      });
+                      config: ActionSheetConfig(
+                        data: ["退出登录"],
+                        style: TextStyle(color: Colors.red),
+                        message: "退出后不会删除任何历史数据，下次登录依然可以使用本账号"
+                      )
+                  );
                 },
               ),
             )
