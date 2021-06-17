@@ -10,23 +10,17 @@ class GetVerificationCode extends StatefulWidget {
   /// 倒计时结束后的按钮文字，默认为：重新验证码
   final String endData;
 
-  /// 文字大小，默认为：12
-  final double fontSize;
+  /// 文本样式
+  final TextStyle style;
 
-  /// 文字字号重，默认为：FontWeight.w600
-  final FontWeight fontWeight;
+  /// 不能点击状态下的文本样式
+  final TextStyle disabledStyle;
 
-  /// 普通状态下文字颜色，默认为：Colors.white
-  final Color textColor;
+  /// 普通状态下按钮的颜色，默认为：Colors.green
+  final Color color;
 
-  /// 不能点击状态下文字颜色，默认为：Colors.green
-  final Color disabledTextColor;
-
-  /// 普通状态下按钮背景颜色，默认为：Colors.green
-  final Color backgroundColor;
-
-  /// 不能点击状态下按钮背景颜色，默认为：Colors.black12
-  final Color disabledBackgroundColor;
+  /// 不能点击状态下按钮的颜色，默认为：Colors.black12
+  final Color disabledColor;
 
   /// 倒计时时间，默认为：60s
   final int count;
@@ -42,6 +36,9 @@ class GetVerificationCode extends StatefulWidget {
 
   /// 按钮的高度
   final double height;
+
+  /// 布局样式，默认为：Alignment.center
+  final AlignmentGeometry alignment;
 
   /// 圆角（BorderRadius.circular(_) or BorderRadius.only(topLeft: Radius.circular(_)））
   final BorderRadius borderRadius;
@@ -59,17 +56,16 @@ class GetVerificationCode extends StatefulWidget {
     Key key,
     this.data = "获取验证码",
     this.endData = "重新验证码",
-    this.fontSize = 12,
-    this.fontWeight = FontWeight.w600,
-    this.textColor = Colors.white,
-    this.disabledTextColor = Colors.green,
-    this.backgroundColor = Colors.green,
-    this.disabledBackgroundColor = Colors.black12,
+    this.style,
+    this.disabledStyle,
+    this.color = Colors.green,
+    this.disabledColor = Colors.black12,
     this.count = 60,
     this.previousText = "",
     this.followingText = "",
     this.width,
     this.height,
+    this.alignment = Alignment.center,
     this.borderRadius,
     this.borderWidth = 0.5,
     this.borderColor = Colors.transparent,
@@ -132,11 +128,11 @@ class _GetVerificationCodeState extends State<GetVerificationCode> {
       child: Container(
           width: widget.width,
           height: widget.height,
-          alignment: Alignment.center,
+          alignment: widget.alignment,
           decoration: BoxDecoration(
             color: isEnable
-                ? widget.backgroundColor
-                : widget.disabledBackgroundColor,
+                ? widget.color
+                : widget.disabledColor,
             borderRadius: widget.borderRadius,
             border: Border.all(
                 width: widget.borderWidth, color: widget.borderColor),
@@ -145,11 +141,7 @@ class _GetVerificationCodeState extends State<GetVerificationCode> {
             absorbing: !isEnable,
             child: Text(
               "${_tempBtnText ?? widget.data}",
-              style: TextStyle(
-                fontSize: widget.fontSize,
-                color: isEnable ? widget.textColor : widget.disabledTextColor,
-                fontWeight: widget.fontWeight,
-              ),
+              style: isEnable ? widget.style : widget.disabledStyle,
             ),
           )),
       onTap: () {

@@ -11,8 +11,8 @@ class NumberLimitInputFormatter extends TextInputFormatter {
   RegExp _exp = RegExp("[0-9.]");
   // 小数点
   static const String _decimal = ".";
-  // 不能以0开头
-  static const String _no_start = "0";
+  // 不能以00开头
+  static const String _no_start = "00";
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -26,8 +26,8 @@ class NumberLimitInputFormatter extends TextInputFormatter {
       return oldValue;
     }
 
-    // 不能以小数点、“0”开头
-    if (newValue.text.startsWith(_decimal) || newValue.text.startsWith(_no_start)) {
+    // 不能以“00”开头
+    if (newValue.text.startsWith(_no_start)) {
       return oldValue;
     }
 

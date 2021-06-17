@@ -21,6 +21,9 @@ class StudentPage extends StatelessWidget {
                 height: 30,
                 width: 100,
                 followingText: "s",
+                style: TextStyle(
+                  color: Colors.white
+                ),
               ),
               SizedBox(height: 20),
               StarRating(
