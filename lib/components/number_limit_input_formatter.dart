@@ -2,17 +2,18 @@ import 'package:flutter/services.dart';
 
 class NumberLimitInputFormatter extends TextInputFormatter {
   /// 限制小数点后几位，默认为：2，小数点后2位
-  int limitDecimal;
+  final int limitDecimal;
+  /// 不能以什么开始，默认为：00
+  final String noStart;
 
   NumberLimitInputFormatter({
     this.limitDecimal = 2,
+    this.noStart = "00"
   });
 
   RegExp _exp = RegExp("[0-9.]");
   // 小数点
   static const String _decimal = ".";
-  // 不能以00开头
-  static const String _no_start = "00";
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -27,7 +28,7 @@ class NumberLimitInputFormatter extends TextInputFormatter {
     }
 
     // 不能以“00”开头
-    if (newValue.text.startsWith(_no_start)) {
+    if (newValue.text.startsWith(noStart)) {
       return oldValue;
     }
 

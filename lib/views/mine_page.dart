@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterkit/components/bottom_action_sheet.dart';
 import 'package:flutterkit/components/button.dart';
-import 'package:flutterkit/components/custom_alert_dialog.dart';
 import 'package:flutterkit/components/lr_list_title.dart';
 import 'package:flutterkit/views/payment_password.dart';
 
@@ -46,37 +45,27 @@ class MinePage extends StatelessWidget {
               padding: EdgeInsets.only(
                 left: 30,
                 right: 30,
-                bottom: 20,
+                bottom: 30,
               ),
               child: Button(
-                "退出登录",
-                style: TextStyle(color: Colors.white),
-                height: 50,
-                borderRadius: BorderRadius.circular(25),
-                backgroundColor: Colors.green,
-                onTap: () {
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (context) {
-                  //       return CustomAlertDialog(
-                  //         title: "温馨提示",
-                  //         message: "您确定要退出登录吗？",
-                  //         cancelTap: () {
-                  //           print("cancel");
-                  //         },
-                  //         sureTap: () {
-                  //           print("sureTap");
-                  //         },
-                  //       );
-                  //     });
-
+                child: Text("退出登录"),
+                config: ButtonStyleConfig(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  size: Size(
+                    double.infinity,
+                    50
+                  ),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                onPressed: () {
                   BottomActionSheet.show(
-                      context: context,
-                      config: ActionSheetConfig(
-                        data: ["退出登录"],
-                        style: TextStyle(color: Colors.red),
-                        message: "退出后不会删除任何历史数据，下次登录依然可以使用本账号"
-                      )
+                    context: context,
+                    config: ActionSheetConfig(
+                      data: ["退出登录"],
+                      style: TextStyle(color: Colors.red),
+                      message: "退出后不会删除任何历史数据，下次登录依然可以使用本账号"
+                    )
                   );
                 },
               ),
