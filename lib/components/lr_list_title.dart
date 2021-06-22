@@ -1,149 +1,234 @@
 import 'package:flutter/material.dart';
 
-typedef LRListTitleTapCallback = void Function();
-typedef LRListTitleLongPressCallback = void Function();
+class DividerConfig {
+  /// 分割线颜色，默认为：Color(0xffeeeeee)
+  final Color color;
 
-class LRListTitle extends StatelessWidget {
-  /// 标题左侧的 Widget
+  /// 分割线高度，默认为：1.0
+  final double height;
+
+  /// 分割线距左边间距，默认为：0.0
+  final double indent;
+
+  /// 分割线距右边边距，默认为：0.0
+  final double endIndent;
+
+  DividerConfig({
+    this.color = const Color(0xffeeeeee),
+    this.height = 1.0,
+    this.indent = 0.0,
+    this.endIndent = 0.0,
+  });
+}
+
+class LRListTitle extends StatefulWidget {
+  /// 左侧 Widget
   final Widget leading;
 
-  /// 标题左侧的 Widget 距左边间距，默认为：20
+  /// 左侧 Widget 距左边间距，默认为：20
   final double leadingIndent;
 
-  /// 标题左侧的 Widget 距右边间距，默认为：10
-  final double leadingEndIndent;
-
-  /// 标题文本
+  /// 标题文本数据
   final String data;
 
   /// 标题文本样式
   final TextStyle style;
 
-  /// 标题距左边间距，默认为：20
+  /// 标题左侧间距，默认为：20
   final double titleIndent;
 
-  /// 标题距右边间距，默认为：10
+  /// 标题右侧间距，默认为：10
   final double titleEndIndent;
 
-  /// 标题右侧的 Widget
-  final Widget trailing;
+  /// 标题右侧 Widget
+  final Widget titleTrailing;
 
-  /// 子标题文本
+  /// 子标题文本数据
   final String subData;
 
   /// 子标题文本样式
   final TextStyle subStyle;
 
-  /// 子标题距右边间距，默认为：20
-  final double subTitleIndent;
+  /// 子标题右侧间距，默认为：20
+  final double subTitleEndIndent;
 
-  /// 子标题右侧的 Widget
-  final Widget subTrailing;
+  /// 右侧 Widget
+  final Widget trailing;
 
-  /// 子标题左侧的 Widget 距左边间距，默认为：10
-  final double subTrailingIndent;
+  /// 右侧 Widget 距右边间距，默认为：20
+  final double trailingEndIndent;
 
-  /// 子标题右侧的 Widget 距右边间距，默认为：20
-  final double subTrailingEndIndent;
+  /// 分割线相关配置
+  final DividerConfig dividerConfig;
 
-  /// 分割线颜色，默认为：Color(0xFFA8A8A8)
-  final Color dividerColor;
-
-  /// 分割线高度，默认为：0.37
-  final double dividerHeight;
-
-  /// 分割线距左边间距，默认为：20
-  final double dividerIndent;
-
-  /// 分割线距右边边距，默认为：20
-  final double dividerEndIndent;
-
-  /// LRListTitle 高度，默认为：44
+  /// 高度，默认为：44
   final double height;
 
+  /// 颜色，默认为：Colors.white
+  final Color color;
+
+  /// 圆角，默认为：BorderRadius.zero
+  final BorderRadiusGeometry borderRadius;
+
   /// 点击回调函数
-  final LRListTitleTapCallback onTap;
+  final GestureTapCallback onTap;
 
   /// 长按回调函数
-  final LRListTitleLongPressCallback onLongPress;
+  final GestureTapCallback onLongPress;
 
-  const LRListTitle(
-      this.data, {
-        Key key,
-        this.leading,
-        this.leadingIndent = 20,
-        this.leadingEndIndent = 10,
-        this.style,
-        this.titleIndent = 20,
-        this.titleEndIndent = 10,
-        this.trailing,
-        this.subData = "",
-        this.subStyle,
-        this.subTitleIndent = 20,
-        this.subTrailing,
-        this.subTrailingIndent = 10,
-        this.subTrailingEndIndent = 20,
-        this.dividerColor = const Color(0xFFA8A8A8),
-        this.dividerHeight = 0.37,
-        this.dividerIndent = 20,
-        this.dividerEndIndent = 20,
-        this.height = 44,
-        this.onTap,
-        this.onLongPress,
-      }) : super(key: key);
+  LRListTitle(this.data, {
+    Key key,
+    this.leading,
+    this.leadingIndent = 20,
+    this.style,
+    this.titleIndent = 20,
+    this.titleEndIndent = 10,
+    this.titleTrailing,
+    this.subData = "",
+    this.subStyle,
+    this.subTitleEndIndent = 20,
+    this.trailing,
+    this.trailingEndIndent = 20,
+    this.dividerConfig,
+    this.height = 44,
+    this.color = Colors.white,
+    this.borderRadius,
+    this.onTap,
+    this.onLongPress,
+  }) : super(key: key);
 
+  @override
+  State<StatefulWidget> createState() {
+    return _LRListTitleState();
+  }
+}
+
+class _LRListTitleState extends State<LRListTitle> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: widget.onTap,
+      onLongPress: widget.onLongPress,
       child: Container(
-        height: height,
+        height: widget.height,
+        decoration: BoxDecoration(
+          color: widget.color,
+          borderRadius: widget.borderRadius,
+        ),
         child: Column(
           children: [
             Container(
-              height: height - dividerHeight,
+              height: height(),
               child: Row(
                 children: [
-                  SizedBox(width: leading == null ? 0 : leadingIndent),
-                  leading == null ? Text("") : leading,
-                  SizedBox(
-                      width: leading == null ? titleIndent : leadingEndIndent),
-                  Text(
-                    data,
-                    style: style,
-                  ),
-                  SizedBox(width: titleEndIndent),
-                  trailing == null ? Text("") : trailing,
-                  Expanded(
-                      child: Container(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          subData,
-                          style: subStyle,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )
-                  ),
-                  SizedBox(width: subTrailing == null ? subTitleIndent : 0),
-                  SizedBox(width: subTrailing == null ? 0 : subTrailingIndent),
-                  subTrailing == null ? Text("") : subTrailing,
-                  SizedBox(
-                      width: subTrailing == null ? 0 : subTrailingEndIndent)
+                  leading(),
+
+                  // 标题
+                  title(),
+                  // 标题右侧widget
+                  titleTrailing(),
+
+                  // 子标题
+                  subTitle(),
+
+                  trailing()
                 ],
               ),
             ),
-            Divider(
-              color: dividerColor,
-              thickness: dividerHeight,
-              height: dividerHeight,
-              indent: dividerIndent,
-              endIndent: dividerEndIndent,
-            ),
+
+            // 分割线
+            divider()
           ],
         ),
       ),
-      onTap: onTap,
-      onLongPress: onLongPress,
     );
   }
+
+  /// 处理高度
+  double height() {
+    return widget.dividerConfig == null ? widget.height - 0.01 : widget.height - widget.dividerConfig.height;
+  }
+
+  /// 处理 leading
+  Widget leading() {
+    if (widget.leading != null) {
+      return Row(
+        children: [
+          SizedBox(width: widget.leadingIndent),
+          widget.leading,
+          SizedBox(width: widget.titleIndent)
+        ],
+      );
+    } else {
+      return SizedBox(width: widget.titleIndent);
+    }
+  }
+
+  /// 处理标题
+  Widget title() {
+    return Row(
+      children: [
+        Text(
+          widget.data,
+          style: widget.style,
+        ),
+        SizedBox(width: widget.titleEndIndent),
+      ],
+    );
+  }
+
+  /// 处理标题右侧 widget
+  Widget titleTrailing() {
+    if (widget.titleTrailing != null) {
+      return widget.titleTrailing;
+    } else {
+      return Text("");
+    }
+  }
+
+  /// 处理子标题
+  Widget subTitle() {
+    return Expanded(
+        child: Container(
+          alignment: Alignment.centerRight,
+          child: Text(
+            widget.subData,
+            style: widget.subStyle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
+    );
+  }
+
+  /// 处理 trailing
+  Widget trailing() {
+    if (widget.trailing != null) {
+      return Row(
+        children: [
+          SizedBox(width: widget.subTitleEndIndent),
+          widget.trailing,
+          SizedBox(width: widget.trailingEndIndent),
+        ],
+      );
+    } else {
+      return SizedBox(width: widget.subTitleEndIndent);
+    }
+  }
+
+  /// 处理分割线
+  Widget divider() {
+    if (widget.dividerConfig != null) {
+      return Divider(
+        color: widget.dividerConfig.color,
+        thickness: widget.dividerConfig.height,
+        height: widget.dividerConfig.height,
+        indent: widget.dividerConfig.indent,
+        endIndent: widget.dividerConfig.endIndent,
+      );
+    } else {
+      return Divider(height: 0.01, color: Colors.transparent,);
+    }
+  }
+
 }

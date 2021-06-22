@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterkit/components/bottom_action_sheet.dart';
+import 'package:flutterkit/components/bottom_sheet.dart' as sg;
 import 'package:flutterkit/components/button.dart';
 import 'package:flutterkit/components/lr_list_title.dart';
 import 'package:flutterkit/views/payment_password.dart';
@@ -25,11 +25,11 @@ class MinePage extends StatelessWidget {
                         child: LRListTitle(
                           lists[index],
                           subData: subLists[index],
-                          subTrailing: Icon(Icons.navigate_next),
+                          trailing: Icon(Icons.navigate_next),
                           subStyle: TextStyle(
                             color: Color(0xff666666),
                           ),
-                          subTrailingIndent: 0,
+                          subTitleEndIndent: 0,
                           onTap: () {
                             if (index == 0) {
                               Navigator.of(context)
@@ -59,9 +59,9 @@ class MinePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                 ),
                 onPressed: () {
-                  BottomActionSheet.show(
+                  sg.BottomSheet.show(
                     context: context,
-                    config: ActionSheetConfig(
+                    config: sg.BottomSheetConfig(
                       data: ["退出登录"],
                       style: TextStyle(color: Colors.red),
                       message: "退出后不会删除任何历史数据，下次登录依然可以使用本账号"
