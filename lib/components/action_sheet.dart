@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-typedef BottomSheetCallback = Function(int);
+typedef ActionSheetCallback = Function(int);
 
-class BottomSheetConfig {
+class ActionSheetConfig {
   /// 提示信息
   final String message;
 
@@ -26,9 +26,9 @@ class BottomSheetConfig {
   final Color dividerColor;
 
   /// 其他标题的点击回调方法
-  final BottomSheetCallback onTap;
+  final ActionSheetCallback onTap;
 
-  BottomSheetConfig({
+  ActionSheetConfig({
     this.message = "",
     this.messageStyle,
     this.data,
@@ -42,9 +42,9 @@ class BottomSheetConfig {
   );
 }
 
-class BottomSheet {
-  /// 显示 BottomSheet
-  static show({BuildContext context, BottomSheetConfig config}) {
+class ActionSheet {
+  /// 显示 ActionSheet
+  static show({BuildContext context, ActionSheetConfig config}) {
     showModalBottomSheet(context: context, backgroundColor: Colors.white, builder: (content) {
       return SafeArea(
           child: Container(

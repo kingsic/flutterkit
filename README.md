@@ -3,9 +3,9 @@
 ## 内容介绍
 |widget名称|注释|
 |----|-----|
-|bottom_sheet|底部弹出表单
+|action_sheet|底部弹出表单
+|alert|弹窗
 |button|按钮
-|custom_alert_dialog|自定义弹窗
 |dotted_line|虚线
 |get_verification_code|验证码
 |lr_list_title|左右标题的ListTitle

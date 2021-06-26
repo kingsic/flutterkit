@@ -34,7 +34,7 @@ class ButtonStyleConfig {
   /// 按下时的背景颜色，默认为：backgroundColor
   final Color pressedBackgroundColor;
 
-  ButtonStyleConfig({
+  const ButtonStyleConfig({
     this.textStyle,
     this.size,
     this.borderSide,
@@ -53,7 +53,7 @@ class Button extends StatelessWidget {
   /// 子组件
   final Widget child;
 
-  /// 配置样式
+  /// 样式配置类
   final ButtonStyleConfig config;
 
   /// 按下回调
@@ -64,15 +64,14 @@ class Button extends StatelessWidget {
 
   Button({
     this.child,
-    this.config,
+    this.config = const ButtonStyleConfig(),
     this.onPressed,
     this.onLongPress,
-  }) : assert(child != null),
-        assert(config != null);
+  }) : assert(child != null);
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: onPressed,
       onLongPress: onLongPress,
       child: child,

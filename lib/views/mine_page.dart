@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterkit/components/bottom_sheet.dart' as sg;
+import 'package:flutterkit/components/action_sheet.dart';
+import 'package:flutterkit/components/alert.dart';
 import 'package:flutterkit/components/button.dart';
 import 'package:flutterkit/components/lr_list_title.dart';
 import 'package:flutterkit/views/payment_password.dart';
@@ -59,10 +60,35 @@ class MinePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25),
                 ),
                 onPressed: () {
-                  sg.BottomSheet.show(
+                  ActionSheet.show(
                     context: context,
-                    config: sg.BottomSheetConfig(
+                    config: ActionSheetConfig(
                       data: ["退出登录"],
+                      onTap: (index) {
+                        showDialog(context: context, builder: (context){
+                          return Alert(
+                            title: "温馨提示",
+                            titleConfig: TitleConfig(
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500
+                              )
+                            ),
+                            message: "再次确认你要退出登录吗",
+                            cancelConfig: CancelConfig(
+                              style: TextStyle(
+                                fontSize: 17,
+                              )
+                            ),
+                            confirmConfig: ConfirmConfig(
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.red
+                              )
+                            ),
+                          );
+                        });
+                      },
                       style: TextStyle(color: Colors.red),
                       message: "退出后不会删除任何历史数据，下次登录依然可以使用本账号"
                     )
