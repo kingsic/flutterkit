@@ -67,25 +67,10 @@ class MinePage extends StatelessWidget {
                       onTap: (index) {
                         showDialog(context: context, builder: (context){
                           return Alert(
-                            title: "温馨提示",
-                            titleConfig: TitleConfig(
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500
-                              )
-                            ),
-                            message: "再次确认你要退出登录吗",
-                            cancelConfig: CancelConfig(
-                              style: TextStyle(
-                                fontSize: 17,
-                              )
-                            ),
-                            confirmConfig: ConfirmConfig(
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.red
-                              )
-                            ),
+                            title: "请再次确认",
+                            message: "你确定要退出登录吗？",
+                            cancelConfig: CancelConfig(),
+                            confirmConfig: ConfirmConfig(),
                           );
                         });
                       },

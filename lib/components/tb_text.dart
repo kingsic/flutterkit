@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TBText extends StatelessWidget {
-  /// 顶部文本内容
+  /// 顶部文本数据
   final String topData;
 
   /// 顶部文本样式
@@ -13,7 +13,7 @@ class TBText extends StatelessWidget {
   /// 顶部文本行数，默认为：1
   final int topMaxLines;
 
-  /// 底部文本内容
+  /// 底部文本数据
   final String bottomData;
 
   /// 底部文本样式

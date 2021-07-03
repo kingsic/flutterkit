@@ -3,7 +3,7 @@
 ## 内容介绍
 |widget名称|注释|
 |----|-----|
-|action_sheet|底部弹出表单
+|action_sheet|底部表单
 |alert|弹窗
 |button|按钮
 |dotted_line|虚线
@@ -13,5 +13,6 @@
 |password_input_box|密码输入框
 |rc_radio|单选框
 |star_rating|星星评分
+|tags|标签
 |tb_text|上下文本
 

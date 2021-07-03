@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TitleConfig {
-  /// 文本样式
+  /// 文本样式，默认为：const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600)
   final TextStyle style;
 
   /// 文本排列，默认为：TextAlign.start
@@ -11,14 +11,14 @@ class TitleConfig {
   final EdgeInsetsGeometry padding;
 
   const TitleConfig({
-    this.style,
+    this.style = const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
     this.textAlign,
     this.padding = const EdgeInsets.fromLTRB(15, 20, 15, 0)
   });
 }
 
 class MessageConfig {
-  /// 信息文本样式
+  /// 信息文本样式，默认为：const TextStyle(fontSize: 13, color: Colors.black)
   final TextStyle style;
 
   /// 信息文本排列，默认为：TextAlign.start
@@ -28,17 +28,17 @@ class MessageConfig {
   final EdgeInsetsGeometry padding;
 
   const MessageConfig({
-    this.style,
+    this.style = const TextStyle(fontSize: 13, color: Colors.black),
     this.textAlign,
     this.padding = const EdgeInsets.fromLTRB(15, 10, 15, 20)
   });
 }
 
 class CancelConfig {
-  /// 文本，默认为："取消"
+  /// 文本数据，默认为："取消"
   final String data;
 
-  /// 文本样式
+  /// 文本样式，默认为：const TextStyle(fontSize: 16, color: Colors.black),
   final TextStyle style;
 
   /// 点击回调方法
@@ -49,17 +49,17 @@ class CancelConfig {
 
   const CancelConfig({
     this.data = "取消",
-    this.style,
+    this.style = const TextStyle(fontSize: 16, color: Colors.black),
     this.onTap,
     this.cancel,
   });
 }
 
 class ConfirmConfig {
-  /// 文本，默认为："确定"
+  /// 文本数据，默认为："确定"
   final String data;
 
-  /// 文本样式
+  /// 文本样式，默认为：const TextStyle(fontSize: 16, color: Colors.black)
   final TextStyle style;
 
   /// 点击回调方法
@@ -70,13 +70,13 @@ class ConfirmConfig {
 
   const ConfirmConfig({
     this.data = "确定",
-    this.style,
+    this.style = const TextStyle(fontSize: 16, color: Colors.black),
     this.onTap,
     this.confirm
   });
 }
 
-class Alert extends StatelessWidget {
+class Alert extends StatefulWidget {
   /// 标题
   final String title;
 
@@ -98,11 +98,14 @@ class Alert extends StatelessWidget {
   /// 确定按钮配置类
   final ConfirmConfig confirmConfig;
 
+  /// 按钮高度，默认为：45.0
+  final double buttonHeight;
+
   /// 颜色
   final Color color;
 
   /// 圆角大小，默认为：10.0
-  final double circular;
+  final double radius;
 
   /// 分割线颜色，默认为：Color(0xffeeeeee)
   final Color dividerColor;
@@ -115,10 +118,20 @@ class Alert extends StatelessWidget {
     this.content,
     this.cancelConfig,
     this.confirmConfig,
+    this.buttonHeight = 45,
     this.color = Colors.white,
-    this.circular = 10.0,
+    this.radius = 10.0,
     this.dividerColor = const Color(0xffeeeeee),
   });
+
+  @override
+  State<StatefulWidget> createState() {
+    return _AlertState();
+  }
+}
+class _AlertState extends State<Alert> {
+  bool _cancelClick = false;
+  bool _confirmClick = false;
 
   @override
   Widget build(BuildContext context) {
@@ -133,27 +146,27 @@ class Alert extends StatelessWidget {
           Container(
             width: double.infinity,
             decoration: ShapeDecoration(
-              color: color,
+              color: widget.color,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(circular),
+                  Radius.circular(widget.radius),
                 ),
               ),
             ),
             child: Column(
               children: [
                 // 标题内容
-                if (title != null)
+                if (widget.title != null)
                   titleContent(),
 
                 // content
-                if (content != null)
-                  content,
-                if (content == null)
+                if (widget.content != null)
+                  widget.content,
+                if (widget.content == null)
                   messageContent(),
 
                 // 按钮
-                if (cancelConfig != null || confirmConfig != null)
+                if (widget.cancelConfig != null || widget.confirmConfig != null)
                   btnContent(context),
               ],
             ),
@@ -169,10 +182,10 @@ class Alert extends StatelessWidget {
       color: Colors.transparent,
       width: double.infinity,
       alignment: Alignment.center,
-      padding: titleConfig.padding,
-      child: Text(title,
-        style: titleConfig.style,
-        textAlign: titleConfig.textAlign,
+      padding: widget.titleConfig.padding,
+      child: Text(widget.title,
+        style: widget.titleConfig.style,
+        textAlign: widget.titleConfig.textAlign,
       ),
     );
   }
@@ -183,10 +196,10 @@ class Alert extends StatelessWidget {
       color:  Colors.transparent,
       width: double.infinity,
       alignment: Alignment.center,
-      padding: messageConfig.padding,
-      child: Text(message,
-        style: messageConfig.style,
-        textAlign: messageConfig.textAlign,
+      padding: widget.messageConfig.padding,
+      child: Text(widget.message,
+        style: widget.messageConfig.style,
+        textAlign: widget.messageConfig.textAlign,
       ),
     );
   }
@@ -198,7 +211,7 @@ class Alert extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            color: dividerColor,
+            color: widget.dividerColor,
             width: double.infinity,
             height: 1,
           ),
@@ -206,51 +219,80 @@ class Alert extends StatelessWidget {
           Container(
             width: double.infinity,
             color: Colors.transparent,
-            height: 45,
+            height: widget.buttonHeight,
             child: Row(
               children: [
-                if (cancelConfig != null)
+                if (widget.cancelConfig != null)
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        if (cancelConfig.cancel == null) {
+                        if (widget.cancelConfig.cancel == null) {
                           Navigator.pop(context);
-                          if (cancelConfig.onTap != null) {
-                            cancelConfig.onTap();
+                          if (widget.cancelConfig.onTap != null) {
+                            widget.cancelConfig.onTap();
                           }
                         }
                       },
+                      onTapDown: (details) {
+                        if (widget.cancelConfig.cancel == null) {
+                          setState(() {
+                            _cancelClick = true;
+                          });
+                        }
+                      },
+                      onTapCancel: () {
+                        if (widget.cancelConfig.cancel == null) {
+                          setState(() {
+                            _cancelClick = false;
+                          });
+                        }
+                      },
                       child: Container(
-                        color: Colors.transparent,
+                        color: _cancelClick == true ? Colors.black12.withOpacity(0.07) : Colors.transparent,
                         alignment: Alignment.center,
-                        height: 45,
-                        child: cancelConfig.cancel != null ? cancelConfig.cancel : Text(cancelConfig.data, style: cancelConfig.style,),
+                        height: widget.buttonHeight,
+                        child: widget.cancelConfig.cancel != null ? widget.cancelConfig.cancel : Text(widget.cancelConfig.data, style: widget.cancelConfig.style,),
                       ),
                     ),
                   ),
 
-                if (cancelConfig != null && confirmConfig !=null)
+                if (widget.cancelConfig != null && widget.confirmConfig !=null)
                   Container(
-                    color: dividerColor,
+                    color: widget.dividerColor,
                     width: 1,
-                    height: 45,
+                    height: widget.buttonHeight,
                   ),
 
-                if (confirmConfig != null)
+                if (widget.confirmConfig != null)
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        if (confirmConfig.confirm == null) {
-                          if (confirmConfig.onTap != null) {
-                            confirmConfig.onTap();
+                        if (widget.confirmConfig.confirm == null) {
+                          Navigator.pop(context);
+                          if (widget.confirmConfig.onTap != null) {
+                            widget.confirmConfig.onTap();
                           }
                         }
                       },
+                      onTapDown: (details) {
+                        if (widget.confirmConfig.confirm == null) {
+                          setState(() {
+                            _confirmClick = true;
+                          });
+                        }
+                      },
+                      onTapCancel: () {
+                        if (widget.confirmConfig.confirm == null) {
+                          setState(() {
+                            _confirmClick = false;
+                          });
+                        }
+                      },
                       child: Container(
-                        color: Colors.transparent,
+                        color: _confirmClick == true ? Colors.black12.withOpacity(0.07) : Colors.transparent,
                         alignment: Alignment.center,
-                        height: 45,
-                        child: confirmConfig.confirm != null ? confirmConfig.confirm : Text(confirmConfig.data, style: confirmConfig.style,),
+                        height: widget.buttonHeight,
+                        child: widget.confirmConfig.confirm != null ? widget.confirmConfig.confirm : Text(widget.confirmConfig.data, style: widget.confirmConfig.style,),
                       ),
                     ),
                   ),
