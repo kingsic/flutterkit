@@ -20,6 +20,7 @@ enum RadioTextStyle {
 
 typedef RCRadioChangedCallback = Function(int);
 
+/// Row 或 Column 包裹的 Radio
 class RCRadio extends StatefulWidget {
   /// 数据
   final List data;
