@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/// 输入完成后的回调函数
 typedef PasswordInputBoxResultCallback = Function(String);
 
 class PasswordInputBox extends StatefulWidget {
@@ -26,10 +25,10 @@ class PasswordInputBox extends StatefulWidget {
   /// 提示框颜色，默认为：black12
   final Color boxColor;
 
-  /// 提示框圆角大小，默认为 0
+  /// 提示框圆角大小，默认为：0.0
   final double boxBorderRaiuds;
 
-  /// 提示框边框的宽度，默认为 0
+  /// 提示框边框的宽度，默认为：0.0
   final double boxBorderWidth;
 
   /// 提示框边框颜色，默认为：transparent

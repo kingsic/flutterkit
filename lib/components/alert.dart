@@ -110,7 +110,8 @@ class Alert extends StatefulWidget {
   /// 分割线颜色，默认为：Color(0xffeeeeee)
   final Color dividerColor;
 
-  Alert({
+  const Alert({
+    Key key,
     this.title,
     this.titleConfig= const TitleConfig(),
     this.message = "",

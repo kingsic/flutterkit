@@ -13,14 +13,11 @@ class TextConfig {
   /// 最大行数
   final int maxLines;
 
-  /// 左边距，默认为：0。0
+  /// 左边距离，默认为：0.0
   final double indent;
 
-  /// 右边距离，默认为：0。0
+  /// 右边距离，默认为：0.0
   final double endIndent;
-
-  /// 是否需要 Expanded 包裹
-  final bool expanded;
 
   const TextConfig({
     this.style,
@@ -29,12 +26,15 @@ class TextConfig {
     this.maxLines,
     this.indent = 0.0,
     this.endIndent = 0.0,
-    this.expanded = false
   });
 }
 
-/// Expanded 或 Flexible 包裹的 Text
-class EFText extends StatelessWidget {
+/// GestureDetector -> Container -> Row -> Flexible -> Text
+/// 具有 GestureDetector、Container、Flexible 相关特性的 Text
+class FlexibleText extends StatelessWidget {
+  /// FlexFit，默认为：FlexFit.loose
+  final FlexFit fit;
+
   /// 文本数据
   final String data;
 
@@ -77,7 +77,10 @@ class EFText extends StatelessWidget {
   /// 点击回调函数
   final VoidCallback onTap;
 
-  EFText(this.data, {
+  const FlexibleText(
+    this.data, {
+    Key key,
+    this.fit = FlexFit.loose,
     this.config = const TextConfig(),
     this.leading,
     this.trailing,
@@ -116,7 +119,7 @@ class EFText extends StatelessWidget {
               leading,
 
             SizedBox(width: config.indent),
-            config.expanded == true ? expandedText() : flexibleText(),
+            text(),
             SizedBox(width: config.endIndent),
 
             if (trailing != null)
@@ -127,19 +130,9 @@ class EFText extends StatelessWidget {
     );
   }
 
-  Widget flexibleText() {
+  Widget text() {
     return Flexible(
-        child: Text("$data",
-          style: config.style,
-          textAlign: config.textAlign,
-          overflow: config.overflow,
-          maxLines: config.maxLines,
-        )
-    );
-  }
-
-  Widget expandedText() {
-    return Expanded(
+      fit: fit,
         child: Text("$data",
           style: config.style,
           textAlign: config.textAlign,

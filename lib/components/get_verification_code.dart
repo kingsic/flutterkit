@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-typedef GetVerificationCodeTapCallback = Function();
-
 class GetVerificationCode extends StatefulWidget {
   /// 初始按钮文字，默认为：获取验证码
   final String data;
@@ -50,9 +48,9 @@ class GetVerificationCode extends StatefulWidget {
   final Color borderColor;
 
   /// 点击回调函数
-  final GetVerificationCodeTapCallback onTap;
+  final VoidCallback onTap;
 
-  GetVerificationCode({
+  const GetVerificationCode({
     Key key,
     this.data = "获取验证码",
     this.endData = "重新验证码",

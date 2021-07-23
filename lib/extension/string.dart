@@ -1,4 +1,4 @@
-extension emptyExt on String {
+extension emptyExtension on String {
   /// 判断字符串是否为空或为null
   ///
   /// 返回为 true 时，则表示为空或为null
@@ -13,7 +13,7 @@ extension emptyExt on String {
   }
 }
 
-extension phoneNumberExt on String {
+extension phoneNumberExtension on String {
   /// 大陆手机号码11位数，匹配格式：前三位固定格式+后8位任意数
   ///
   /// 此方法中前三位格式有：

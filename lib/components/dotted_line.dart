@@ -16,7 +16,8 @@ class DottedLine extends StatelessWidget {
   /// 虚线的颜色，默认为：0xffaaaaaa
   final Color color;
 
-  DottedLine({
+  const DottedLine({
+    Key key,
     @required this.axis,
     this.width = 1.0,
     this.height = 1.0,

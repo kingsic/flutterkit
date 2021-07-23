@@ -26,20 +26,4 @@
      return tempString;
    }
  
-   /// 数组转字符串
-   static String listToString(List list, {String split = ""}){
-     if (list == null) {
-       return null;
-     }
-     String result;
-     list.forEach((element) {
-       if (result == null) {
-         result = element;
-       } else {
-         result = "$result$split$element";
-       }
-     });
-     return result.toString();
-   }
- 
  }

@@ -76,7 +76,8 @@ class LRListTitle extends StatefulWidget {
   /// 长按回调函数
   final GestureTapCallback onLongPress;
 
-  LRListTitle(this.data, {
+  const LRListTitle(
+    this.data, {
     Key key,
     this.leading,
     this.leadingIndent = 20,

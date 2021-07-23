@@ -62,7 +62,8 @@ class Button extends StatelessWidget {
   /// 长按回调
   final VoidCallback onLongPress;
 
-  Button({
+  const Button({
+    Key key,
     this.child,
     this.config = const ButtonStyleConfig(),
     this.onPressed,

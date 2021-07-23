@@ -34,7 +34,7 @@ class TBText extends StatelessWidget {
   /// 高度
   final double height;
 
-  /// 内边距，默认上下左右间距都是 5
+  /// 内边距，默认上下左右间距都是：5
   final EdgeInsetsGeometry padding;
 
   /// 顶部与底部文本之间的间距
@@ -46,7 +46,9 @@ class TBText extends StatelessWidget {
   /// 横轴对齐样式，默认为：start
   final CrossAxisAlignment crossAxisAlignment;
 
-  const TBText(this.topData, this.bottomData, {
+  const TBText(
+    this.topData,
+    this.bottomData, {
     Key key,
     this.topStyle,
     this.topOverflow,

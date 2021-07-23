@@ -3,11 +3,11 @@
 ## 内容介绍
 |widget名称|注释|
 |----|-----|
-|action_sheet|底部弹窗菜单
-|alert|弹窗
+|action_sheet|提示框
+|alert|提示框
 |button|按钮
 |dotted_line|虚线
-|ef_text|文本
+|flexible_text|文本
 |get_verification_code|验证码
 |lr_list_title|左右标题的ListTitle
 |number_input_formatter|数字键盘输入格式

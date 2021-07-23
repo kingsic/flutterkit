@@ -55,7 +55,8 @@ class RCRadio extends StatefulWidget {
   /// RCRadio 的高度
   final double height;
 
-  RCRadio(this.data, {
+  RCRadio(
+    this.data, {
     this.style = RadioStyle.row,
     this.radioTextStyle = RadioTextStyle.none,
     this.activeColor = Colors.green,

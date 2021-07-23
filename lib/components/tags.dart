@@ -6,6 +6,12 @@ class Tags extends StatefulWidget {
   /// 标签文本数据
   final List data;
 
+  /// 横轴个数
+  final int crossAxisCount;
+
+  /// 文本对齐样式，默认为：Alignment.center。只有设置 crossAxisCount 属性时，才起作用
+  final AlignmentGeometry alignment;
+
   /// 标签文本样式
   final TextStyle style;
 
@@ -48,13 +54,17 @@ class Tags extends StatefulWidget {
   /// 标签是否为多选，默认为：false 单选
   final bool multiSelect;
 
-  /// 标签是否能够选择，默认为：true
+  /// 标签是否能够选择，默认为：true 可选
   final bool ableSelect;
 
   /// 标签点击回调方法
   final TagsCallback onTap;
 
-  Tags(this.data, {
+  const Tags(
+    this.data, {
+    Key key,
+    this.crossAxisCount = 0,
+    this.alignment = Alignment.center,
     this.style,
     this.selectedStyle,
     this.textSpacing = 15.0,
@@ -124,25 +134,53 @@ class _TagsState extends State<Tags> {
               }
             }
           },
-          child: Container(
-            height: widget.height,
-            padding: EdgeInsets.fromLTRB(widget.textSpacing, top(index), widget.textSpacing, 0),
-            child: Text(widget.data[index],
-              style: style(index),
-            ),
-            decoration: BoxDecoration(
-              color: backgroundColor(index),
-              borderRadius: widget.borderRadius,
-              border: Border.all(color: borderColor(index), width: widget.borderWidth)
-            ),
-          ),
+          child: widget.crossAxisCount > 0 ? crossAxisCountStyle(index) : defaultStyle(index),
         );
       }),
     );
   }
 
-  /// top
-  double top(int index) {
+  Widget crossAxisCountStyle(int index) {
+    return LayoutBuilder(
+      builder: (context, constrains) {
+        double width = constrains.maxWidth;
+        double eachTagWidth = (width - (widget.spacing * (widget.crossAxisCount - 1))) / widget.crossAxisCount;
+        return Container(
+          width: eachTagWidth,
+          height: widget.height,
+          alignment: widget.alignment,
+          child: Text(widget.data[index],
+            style: style(index),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          decoration: BoxDecoration(
+            color: backgroundColor(index),
+            borderRadius: widget.borderRadius,
+            border: Border.all(color: borderColor(index), width: widget.borderWidth)
+          ),
+        );
+      }
+    );
+  }
+
+  Widget defaultStyle(int index) {
+    return Container(
+      height: widget.height,
+      padding: EdgeInsets.fromLTRB(widget.textSpacing, paddingOfTop(index), widget.textSpacing, 0),
+      child: Text(widget.data[index],
+        style: style(index),
+      ),
+      decoration: BoxDecoration(
+        color: backgroundColor(index),
+        borderRadius: widget.borderRadius,
+        border: Border.all(color: borderColor(index), width: widget.borderWidth)
+      ),
+    );
+  }
+
+  /// paddingOfTop
+  double paddingOfTop(int index) {
     if (_tempIndexes.isEmpty) {
       double textHeight = calculateStringSize(widget.data[index], widget.style).height;
       return 0.5 * (widget.height - textHeight) - widget.borderWidth;
