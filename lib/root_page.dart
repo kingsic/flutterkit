@@ -3,7 +3,7 @@ import 'package:flutterkit/views/active_page.dart';
 import 'package:flutterkit/views/home_page.dart';
 import 'package:flutterkit/views/mine_page.dart';
 import 'package:flutterkit/views/order_page.dart';
-import 'package:flutterkit/views/student_page.dart';
+import 'package:flutterkit/views/example_page.dart';
 
 class RootPage extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ const Map<String, String> _bottomNames = {
   "home": "首页",
   "active": "活动",
   "order": "",
-  "student": "学员",
+  "student": "案例",
   "mine": "我的",
 };
 
@@ -27,7 +27,7 @@ class RootPageState extends State<RootPage> {
     HomePage(),
     ActivePage(),
     OrderPage(),
-    StudentPage(),
+    ExamplePage(),
     MinePage()
   ];
   final List<BottomNavigationBarItem> _bottomNavigationBarItemList = [];

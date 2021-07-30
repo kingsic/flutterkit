@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 enum RadioStyle {
   /// Row方式布局
   row,
+
   /// column方式布局
   column,
 }
@@ -12,8 +13,10 @@ enum RadioStyle {
 enum RadioTextStyle {
   /// 仅显示Radio
   none,
+
   /// Radio在前，文本在后
   previous,
+
   /// Radio在后，文本在前
   following
 }

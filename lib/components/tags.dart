@@ -2,6 +2,36 @@ import 'package:flutter/material.dart';
 
 typedef TagsCallback = Function(List);
 
+class LeadingTag {
+  /// 内容组件
+  final Widget content;
+
+  /// 对应下标值
+  final int index;
+
+  /// 与文本之间的间距
+  final double spacing;
+
+  LeadingTag(this.content, this.index, {
+    this.spacing
+  });
+}
+
+class TrailingTag {
+  /// 内容组件
+  final Widget content;
+
+  /// 对应下标值
+  final int index;
+
+  /// 与文本之间的间距
+  final double spacing;
+
+  TrailingTag(this.content, this.index, {
+    this.spacing
+  });
+}
+
 class Tags extends StatefulWidget {
   /// 标签文本数据
   final List data;
@@ -12,11 +42,20 @@ class Tags extends StatefulWidget {
   /// 文本对齐样式，默认为：Alignment.center。只有设置 crossAxisCount 属性时，才起作用
   final AlignmentGeometry alignment;
 
+  /// FlexFit，默认为：FlexFit.loose。只有设置 crossAxisCount 属性时，才起作用
+  final FlexFit fit;
+
   /// 标签文本样式
   final TextStyle style;
 
   /// 标签选中时的文本样式
   final TextStyle selectedStyle;
+
+  /// 文本左侧内容组件
+  final List<LeadingTag> leadingTags;
+
+  /// 文本右侧内容组件
+  final List<TrailingTag> trailingTags;
 
   /// 标签文本距左右边框的间距，默认为：15.0
   final double textSpacing;
@@ -24,10 +63,10 @@ class Tags extends StatefulWidget {
   /// 标签高度，默认为：30.0
   final double height;
 
-  /// 标签左右之间的间距，默认为：15.0
+  /// 标签之间左右的间距，默认为：15.0
   final double spacing;
 
-  /// 标签上下之间的间距，默认为：15.0
+  /// 标签之间上下的间距，默认为：15.0
   final double runSpacing;
 
   /// 标签背景颜色，默认为：const Color(0xfff9f9f9)
@@ -65,9 +104,12 @@ class Tags extends StatefulWidget {
     Key key,
     this.crossAxisCount = 0,
     this.alignment = Alignment.center,
+    this.fit = FlexFit.loose,
     this.style,
     this.selectedStyle,
     this.textSpacing = 15.0,
+    this.leadingTags = const [],
+    this.trailingTags = const [],
     this.height = 30.0,
     this.spacing = 15.0,
     this.runSpacing = 15.0,
@@ -91,6 +133,10 @@ class Tags extends StatefulWidget {
 
 class _TagsState extends State<Tags> {
   List<int> _tempIndexes = [];
+  List<LeadingTag> _tempLeadingTagModels = [];
+  List<int> _tempLeadingTagIndexes = [];
+  List<TrailingTag> _tempTrailingTagModels = [];
+  List<int> _tempTrailingTagIndexes = [];
 
   @override
   void initState() {
@@ -102,6 +148,22 @@ class _TagsState extends State<Tags> {
       } else {
         _tempIndexes.add(widget.indexes.first);
       }
+    }
+
+    if (widget.leadingTags.isNotEmpty) {
+      widget.leadingTags.forEach((element) {
+        LeadingTag model = element;
+        _tempLeadingTagModels.add(model);
+        _tempLeadingTagIndexes.add(model.index);
+      });
+    }
+
+    if (widget.trailingTags.isNotEmpty) {
+      widget.trailingTags.forEach((element) {
+        TrailingTag model = element;
+        _tempTrailingTagModels.add(model);
+        _tempTrailingTagIndexes.add(model.index);
+      });
     }
   }
 
@@ -149,15 +211,29 @@ class _TagsState extends State<Tags> {
           width: eachTagWidth,
           height: widget.height,
           alignment: widget.alignment,
-          child: Text(widget.data[index],
-            style: style(index),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
           decoration: BoxDecoration(
             color: backgroundColor(index),
             borderRadius: widget.borderRadius,
             border: Border.all(color: borderColor(index), width: widget.borderWidth)
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (_tempLeadingTagIndexes.contains(index))
+                leading(index),
+
+              Flexible(
+                fit: widget.fit,
+                child: Text(widget.data[index],
+                  style: style(index),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                )
+              ),
+
+              if (_tempTrailingTagIndexes.contains(index))
+                trailing(index)
+            ],
           ),
         );
       }
@@ -167,37 +243,50 @@ class _TagsState extends State<Tags> {
   Widget defaultStyle(int index) {
     return Container(
       height: widget.height,
-      padding: EdgeInsets.fromLTRB(widget.textSpacing, paddingOfTop(index), widget.textSpacing, 0),
-      child: Text(widget.data[index],
-        style: style(index),
-      ),
+      padding: EdgeInsets.symmetric(horizontal: widget.textSpacing),
       decoration: BoxDecoration(
         color: backgroundColor(index),
         borderRadius: widget.borderRadius,
         border: Border.all(color: borderColor(index), width: widget.borderWidth)
       ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (_tempLeadingTagIndexes.contains(index))
+            leading(index),
+
+          Text(widget.data[index],
+            style: style(index),
+          ),
+
+          if (_tempTrailingTagIndexes.contains(index))
+            trailing(index)
+        ],
+      ),
     );
   }
 
-  /// paddingOfTop
-  double paddingOfTop(int index) {
-    if (_tempIndexes.isEmpty) {
-      double textHeight = calculateStringSize(widget.data[index], widget.style).height;
-      return 0.5 * (widget.height - textHeight) - widget.borderWidth;
-    } else {
-      if (widget.multiSelect) {
-        if (_tempIndexes.contains(index)) {
-          double textHeight = calculateStringSize(widget.data[index], widget.selectedStyle).height;
-          return 0.5 * (widget.height - textHeight) - widget.borderWidth;
-        } else {
-          double textHeight = calculateStringSize(widget.data[index], widget.style).height;
-          return 0.5 * (widget.height - textHeight) - widget.borderWidth;
-        }
-      } else {
-        double textHeight = calculateStringSize(widget.data[index], _tempIndexes.first == index ? widget.selectedStyle : widget.style).height;
-        return 0.5 * (widget.height - textHeight) - widget.borderWidth;
-      }
-    }
+  Widget leading(int index) {
+    /// 获取当前 index 所对应的元素处在 _tempLeadingTagIndexes 数组中的下标值
+    int tempIndex = _tempLeadingTagIndexes.indexOf(index);
+    LeadingTag model = _tempLeadingTagModels[tempIndex];
+    return Row(
+      children: [
+        model.content,
+        SizedBox(width: model.spacing)
+      ],
+    );
+  }
+
+  Widget trailing(int index) {
+    int tempIndex = _tempTrailingTagIndexes.indexOf(index);
+    TrailingTag model = _tempTrailingTagModels[tempIndex];
+    return Row(
+      children: [
+        SizedBox(width: model.spacing),
+        model.content
+      ],
+    );
   }
   
   /// 文本样式处理
@@ -249,18 +338,6 @@ class _TagsState extends State<Tags> {
         return _tempIndexes.first == index ? widget.selectedBorderColor : widget.borderColor;
       }
     }
-  }
-
-  /// 计算字符串的 size
-  Size calculateStringSize(String text, TextStyle style) {
-    TextPainter painter = TextPainter(
-      text: TextSpan(text: text, style: style),
-      textDirection: TextDirection.ltr,
-      maxLines: 1,
-      ellipsis: '...',
-    );
-    painter.layout();
-    return painter.size;
   }
 
 }

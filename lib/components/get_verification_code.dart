@@ -14,7 +14,7 @@ class GetVerificationCode extends StatefulWidget {
   /// 不能点击状态下的文本样式
   final TextStyle disabledStyle;
 
-  /// 普通状态下按钮的颜色，默认为：Colors.green
+  /// 普通状态下按钮的颜色，默认为：Colors.transparent
   final Color color;
 
   /// 不能点击状态下按钮的颜色，默认为：Colors.black12
@@ -56,7 +56,7 @@ class GetVerificationCode extends StatefulWidget {
     this.endData = "重新验证码",
     this.style,
     this.disabledStyle,
-    this.color = Colors.green,
+    this.color = Colors.transparent,
     this.disabledColor = Colors.black12,
     this.count = 60,
     this.previousText = "",
