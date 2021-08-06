@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// 文本配置类
 class TextConfig {
   /// 样式
   final TextStyle style;
@@ -29,8 +30,13 @@ class TextConfig {
   });
 }
 
-/// GestureDetector -> Container -> Row -> Flexible -> Text
-/// 具有 GestureDetector、Container、Flexible 相关特性的 Text
+/// GestureDetector、Container、Flexible 包裹下的 Text
+///
+/// 具有 GestureDetector 的 onTap 属性
+///
+/// 具有 Container 的 width、height、margin、padding、alignment、color、borderRadius、border、gradient 属性
+///
+/// 具有 Flexible 的 fit 属性
 class FlexibleText extends StatelessWidget {
   /// FlexFit，默认为：FlexFit.loose
   final FlexFit fit;

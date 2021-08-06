@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// 标题配置类
 class TitleConfig {
   /// 文本样式，默认为：const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600)
   final TextStyle style;
@@ -17,6 +18,7 @@ class TitleConfig {
   });
 }
 
+/// 信息配置类
 class MessageConfig {
   /// 信息文本样式，默认为：const TextStyle(fontSize: 13, color: Colors.black)
   final TextStyle style;
@@ -34,6 +36,7 @@ class MessageConfig {
   });
 }
 
+/// 取消按钮配置类
 class CancelConfig {
   /// 文本数据，默认为："取消"
   final String data;
@@ -55,6 +58,7 @@ class CancelConfig {
   });
 }
 
+/// 确认按钮配置类
 class ConfirmConfig {
   /// 文本数据，默认为："确定"
   final String data;

@@ -103,16 +103,16 @@ class TagsPage extends StatelessWidget {
                     backgroundColor: Colors.black12,
                     selectedBackgroundColor: Colors.black12,
                     borderRadius: BorderRadius.circular(10),
-                    leadingTags: [
-                      LeadingTag(Icon(Icons.hotel, color: Colors.orangeAccent, size: 17), 0, spacing: 2),
-                      LeadingTag(Icon(Icons.train, color: Colors.lightBlueAccent, size: 17,), 2),
-                      LeadingTag(Image.asset("assets/images/tabbar/student_active.png",
+                    leadingConfigs: [
+                      LeadingConfig(Icon(Icons.hotel, color: Colors.orangeAccent, size: 17), 0, spacing: 2),
+                      LeadingConfig(Icon(Icons.train, color: Colors.lightBlueAccent, size: 17,), 2),
+                      LeadingConfig(Image.asset("assets/images/tabbar/student_active.png",
                         width: 17,
                         color: Colors.lightBlueAccent,
                       ), 1, spacing: 2),
                     ],
-                    trailingTags: [
-                      TrailingTag(Text("爆款价", style: TextStyle(fontSize: 12),), 4, spacing: 3)
+                    trailingConfigs: [
+                      TrailingConfig(Text("爆款价", style: TextStyle(fontSize: 12),), 4, spacing: 3)
                     ],
                   ),
                 ),
@@ -127,19 +127,19 @@ class TagsPage extends StatelessWidget {
                     crossAxisCount: 1,
                     alignment: Alignment.centerLeft,
                     fit: FlexFit.tight,
-                    leadingTags: [
-                      LeadingTag(Icon(Icons.watch_later_outlined, size: 17,), 0, spacing: 9),
-                      LeadingTag(Icon(Icons.watch_later_outlined, size: 17,), 1, spacing: 9),
-                      LeadingTag(Icon(Icons.watch_later_outlined, size: 17,), 2, spacing: 9),
-                      LeadingTag(Icon(Icons.watch_later_outlined, size: 17,), 3, spacing: 9),
-                      LeadingTag(Icon(Icons.watch_later_outlined, size: 17,), 4, spacing: 9),
+                    leadingConfigs: [
+                      LeadingConfig(Icon(Icons.watch_later_outlined, size: 17,), 0, spacing: 9),
+                      LeadingConfig(Icon(Icons.watch_later_outlined, size: 17,), 1, spacing: 9),
+                      LeadingConfig(Icon(Icons.watch_later_outlined, size: 17,), 2, spacing: 9),
+                      LeadingConfig(Icon(Icons.watch_later_outlined, size: 17,), 3, spacing: 9),
+                      LeadingConfig(Icon(Icons.watch_later_outlined, size: 17,), 4, spacing: 9),
                     ],
-                    trailingTags: [
-                      TrailingTag(Icon(Icons.close_sharp, size: 15), 0,),
-                      TrailingTag(Icon(Icons.close_sharp, size: 15), 1,),
-                      TrailingTag(Icon(Icons.close_sharp, size: 15), 2,),
-                      TrailingTag(Icon(Icons.close_sharp, size: 15), 3,),
-                      TrailingTag(Icon(Icons.close_sharp, size: 15), 4,),
+                    trailingConfigs: [
+                      TrailingConfig(Icon(Icons.close_sharp, size: 15), 0,),
+                      TrailingConfig(Icon(Icons.close_sharp, size: 15), 1,),
+                      TrailingConfig(Icon(Icons.close_sharp, size: 15), 2,),
+                      TrailingConfig(Icon(Icons.close_sharp, size: 15), 3,),
+                      TrailingConfig(Icon(Icons.close_sharp, size: 15), 4,),
                     ],
                   ),
                 ),
@@ -153,23 +153,23 @@ class TagsPage extends StatelessWidget {
                   child: Tags(["中国队第10金", "射手冠军玩射手吗", "马龙吹手调整状态", "今日奥运看点", "唐山大地震45周年", "IG战胜TES", "摩托车跑车", "智能手表", "车载收音机", "奥运会为何没有俄罗斯"],
                     crossAxisCount: 2,
                     alignment: Alignment.centerLeft,
-                    leadingTags: [
-                      LeadingTag(Text("1", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 0, spacing: 10),
-                      LeadingTag(Text("2", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 1, spacing: 10),
-                      LeadingTag(Text("3", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 2, spacing: 10),
-                      LeadingTag(Text("4", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 3, spacing: 10),
-                      LeadingTag(Text("5", style: TextStyle(color: Colors.black45, fontWeight: FontWeight.w600),), 4, spacing: 10),
-                      LeadingTag(Text("6", style: TextStyle(color: Colors.black45),), 5, spacing: 10),
-                      LeadingTag(Text("7", style: TextStyle(color: Colors.black45),), 6, spacing: 10),
-                      LeadingTag(Text("8", style: TextStyle(color: Colors.black45),), 7, spacing: 10),
-                      LeadingTag(Text("9", style: TextStyle(color: Colors.black45),), 8, spacing: 10),
-                      LeadingTag(Text("10", style: TextStyle(color: Colors.black45),), 9, spacing: 10),
+                    leadingConfigs: [
+                      LeadingConfig(Text("1", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 0, spacing: 10),
+                      LeadingConfig(Text("2", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 1, spacing: 10),
+                      LeadingConfig(Text("3", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 2, spacing: 10),
+                      LeadingConfig(Text("4", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 3, spacing: 10),
+                      LeadingConfig(Text("5", style: TextStyle(color: Colors.black45, fontWeight: FontWeight.w600),), 4, spacing: 10),
+                      LeadingConfig(Text("6", style: TextStyle(color: Colors.black45),), 5, spacing: 10),
+                      LeadingConfig(Text("7", style: TextStyle(color: Colors.black45),), 6, spacing: 10),
+                      LeadingConfig(Text("8", style: TextStyle(color: Colors.black45),), 7, spacing: 10),
+                      LeadingConfig(Text("9", style: TextStyle(color: Colors.black45),), 8, spacing: 10),
+                      LeadingConfig(Text("10", style: TextStyle(color: Colors.black45),), 9, spacing: 10),
                     ],
                     style: TextStyle(
                         color: Colors.black87
                     ),
-                    trailingTags: [
-                      TrailingTag(Container(
+                    trailingConfigs: [
+                      TrailingConfig(Container(
                         child: Text("热", style: TextStyle(color: Colors.white, fontSize: 8),),
                         width: 12,
                         height: 12,
@@ -179,7 +179,7 @@ class TagsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(2)
                         ),
                       ), 0, spacing: 5),
-                      TrailingTag(Container(
+                      TrailingConfig(Container(
                         child: Text("新", style: TextStyle(color: Colors.white, fontSize: 8),),
                         width: 12,
                         height: 12,

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
+/// 标签文本选中回调函数，返回选中标签下标值
+///
+/// 单选情况下，数组元素始终为：1，多选情况下，数组元素为：选中标签下标值
 typedef TagsCallback = Function(List);
 
-class LeadingTag {
+/// 标签文本前面的配置类
+class LeadingConfig {
   /// 内容组件
   final Widget content;
 
@@ -12,12 +16,14 @@ class LeadingTag {
   /// 与文本之间的间距
   final double spacing;
 
-  LeadingTag(this.content, this.index, {
+  /// 根据标签的下标值，给标签文本前面添加配置组件
+  LeadingConfig(this.content, this.index, {
     this.spacing
   });
 }
 
-class TrailingTag {
+/// 标签文本后面的配置类
+class TrailingConfig {
   /// 内容组件
   final Widget content;
 
@@ -27,11 +33,13 @@ class TrailingTag {
   /// 与文本之间的间距
   final double spacing;
 
-  TrailingTag(this.content, this.index, {
+  /// 根据标签的下标值，给标签文本后面添加配置组件
+  TrailingConfig(this.content, this.index, {
     this.spacing
   });
 }
 
+/// 标签类
 class Tags extends StatefulWidget {
   /// 标签文本数据
   final List data;
@@ -51,14 +59,14 @@ class Tags extends StatefulWidget {
   /// 标签选中时的文本样式
   final TextStyle selectedStyle;
 
-  /// 文本左侧内容组件
-  final List<LeadingTag> leadingTags;
+  /// 标签文本前面配置类集合
+  final List<LeadingConfig> leadingConfigs;
 
-  /// 文本右侧内容组件
-  final List<TrailingTag> trailingTags;
+  /// 标签文本后面配置类集合
+  final List<TrailingConfig> trailingConfigs;
 
-  /// 标签文本距左右边框的间距，默认为：15.0
-  final double textSpacing;
+  /// 标签内容距左右边距的间距，默认为：15.0
+  final double contentSpacing;
 
   /// 标签高度，默认为：30.0
   final double height;
@@ -99,6 +107,11 @@ class Tags extends StatefulWidget {
   /// 标签点击回调方法
   final TagsCallback onTap;
 
+  /// 支持单选（默认）和多选【multiSelect = true】，可选中（默认）和不可选中【ableSelect = false】
+  ///
+  /// 支持流水布局（默认）和固定布局，设置每行标签个数【crossAxisCount】
+  ///
+  /// 支持根据标签下标值给标签文本前后添加配置组件【leadingConfigs、trailingConfigs】
   const Tags(
     this.data, {
     Key key,
@@ -107,9 +120,9 @@ class Tags extends StatefulWidget {
     this.fit = FlexFit.loose,
     this.style,
     this.selectedStyle,
-    this.textSpacing = 15.0,
-    this.leadingTags = const [],
-    this.trailingTags = const [],
+    this.contentSpacing = 15.0,
+    this.leadingConfigs = const [],
+    this.trailingConfigs = const [],
     this.height = 30.0,
     this.spacing = 15.0,
     this.runSpacing = 15.0,
@@ -133,10 +146,10 @@ class Tags extends StatefulWidget {
 
 class _TagsState extends State<Tags> {
   List<int> _tempIndexes = [];
-  List<LeadingTag> _tempLeadingTagModels = [];
-  List<int> _tempLeadingTagIndexes = [];
-  List<TrailingTag> _tempTrailingTagModels = [];
-  List<int> _tempTrailingTagIndexes = [];
+  List<LeadingConfig> _tempLeadingConfigModels = [];
+  List<int> _tempLeadingConfigIndexes = [];
+  List<TrailingConfig> _tempTrailingConfigModels = [];
+  List<int> _tempTrailingConfigIndexes = [];
 
   @override
   void initState() {
@@ -150,19 +163,19 @@ class _TagsState extends State<Tags> {
       }
     }
 
-    if (widget.leadingTags.isNotEmpty) {
-      widget.leadingTags.forEach((element) {
-        LeadingTag model = element;
-        _tempLeadingTagModels.add(model);
-        _tempLeadingTagIndexes.add(model.index);
+    if (widget.leadingConfigs.isNotEmpty) {
+      widget.leadingConfigs.forEach((element) {
+        LeadingConfig model = element;
+        _tempLeadingConfigModels.add(model);
+        _tempLeadingConfigIndexes.add(model.index);
       });
     }
 
-    if (widget.trailingTags.isNotEmpty) {
-      widget.trailingTags.forEach((element) {
-        TrailingTag model = element;
-        _tempTrailingTagModels.add(model);
-        _tempTrailingTagIndexes.add(model.index);
+    if (widget.trailingConfigs.isNotEmpty) {
+      widget.trailingConfigs.forEach((element) {
+        TrailingConfig model = element;
+        _tempTrailingConfigModels.add(model);
+        _tempTrailingConfigIndexes.add(model.index);
       });
     }
   }
@@ -219,7 +232,7 @@ class _TagsState extends State<Tags> {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (_tempLeadingTagIndexes.contains(index))
+              if (_tempLeadingConfigIndexes.contains(index))
                 leading(index),
 
               Flexible(
@@ -231,7 +244,7 @@ class _TagsState extends State<Tags> {
                 )
               ),
 
-              if (_tempTrailingTagIndexes.contains(index))
+              if (_tempTrailingConfigIndexes.contains(index))
                 trailing(index)
             ],
           ),
@@ -243,7 +256,7 @@ class _TagsState extends State<Tags> {
   Widget defaultStyle(int index) {
     return Container(
       height: widget.height,
-      padding: EdgeInsets.symmetric(horizontal: widget.textSpacing),
+      padding: EdgeInsets.symmetric(horizontal: widget.contentSpacing),
       decoration: BoxDecoration(
         color: backgroundColor(index),
         borderRadius: widget.borderRadius,
@@ -252,14 +265,14 @@ class _TagsState extends State<Tags> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (_tempLeadingTagIndexes.contains(index))
+          if (_tempLeadingConfigIndexes.contains(index))
             leading(index),
 
           Text(widget.data[index],
             style: style(index),
           ),
 
-          if (_tempTrailingTagIndexes.contains(index))
+          if (_tempTrailingConfigIndexes.contains(index))
             trailing(index)
         ],
       ),
@@ -267,9 +280,9 @@ class _TagsState extends State<Tags> {
   }
 
   Widget leading(int index) {
-    /// 获取当前 index 所对应的元素处在 _tempLeadingTagIndexes 数组中的下标值
-    int tempIndex = _tempLeadingTagIndexes.indexOf(index);
-    LeadingTag model = _tempLeadingTagModels[tempIndex];
+    /// 获取当前 index 所对应的元素处在 _tempLeadingConfigIndexes 数组中的下标值
+    int tempIndex = _tempLeadingConfigIndexes.indexOf(index);
+    LeadingConfig model = _tempLeadingConfigModels[tempIndex];
     return Row(
       children: [
         model.content,
@@ -279,8 +292,8 @@ class _TagsState extends State<Tags> {
   }
 
   Widget trailing(int index) {
-    int tempIndex = _tempTrailingTagIndexes.indexOf(index);
-    TrailingTag model = _tempTrailingTagModels[tempIndex];
+    int tempIndex = _tempTrailingConfigIndexes.indexOf(index);
+    TrailingConfig model = _tempTrailingConfigModels[tempIndex];
     return Row(
       children: [
         SizedBox(width: model.spacing),
