@@ -17,53 +17,6 @@ class TagsPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.all(10),
-                  child: Text("均分布局样式"),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Tags(dataList,
-                    crossAxisCount: 3,
-                    backgroundColor: Colors.lightGreen,
-                    selectedBackgroundColor: Colors.deepOrange,
-                    selectedStyle: TextStyle(
-                        color: Colors.white
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text("默认布局样式"),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Tags(dataList,
-                    borderRadius: BorderRadius.circular(10),
-                    backgroundColor: Colors.lime,
-                    selectedBackgroundColor: Colors.lime,
-                    onTap: (index) {
-                      print("当前点击的tag下标是：${index.first}");
-                    },
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text("单选样式 + 默认选中"),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Tags(dataList,
-                    indexes: [1],
-                    backgroundColor: Colors.lime,
-                    selectedBackgroundColor: Colors.deepOrange,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.all(10),
                   child: Text("多选样式 + 默认选中"),
                 ),
                 Padding(
@@ -71,26 +24,11 @@ class TagsPage extends StatelessWidget {
                     child: Tags(dataList,
                       indexes: [0, 2],
                       multiSelect: true,
-                      backgroundColor: Colors.lightGreen,
-                      selectedBackgroundColor: Colors.deepOrange,
-                      borderRadius: BorderRadius.circular(10),
+                      borderColor: Colors.black,
+                      selectedBackgroundColor: Colors.black,
+                      selectedStyle: TextStyle(color: Colors.white),
+                      borderRadius: BorderRadius.circular(15),
                     )
-                ),
-
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text("标签不可点击"),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Tags(dataList,
-                    ableSelect: false,
-                    backgroundColor: Colors.lightGreen,
-                    borderRadius: BorderRadius.circular(10),
-                    style: TextStyle(
-                        color: Colors.white
-                    ),
-                  ),
                 ),
 
                 Padding(
@@ -104,15 +42,15 @@ class TagsPage extends StatelessWidget {
                     selectedBackgroundColor: Colors.black12,
                     borderRadius: BorderRadius.circular(10),
                     leadingConfigs: [
-                      LeadingConfig(Icon(Icons.hotel, color: Colors.orangeAccent, size: 17), 0, spacing: 2),
-                      LeadingConfig(Icon(Icons.train, color: Colors.lightBlueAccent, size: 17,), 2),
-                      LeadingConfig(Image.asset("assets/images/tabbar/student_active.png",
+                      TagConfig(Icon(Icons.hotel, color: Colors.orangeAccent, size: 17), 0, spacing: 2),
+                      TagConfig(Icon(Icons.train, color: Colors.lightBlueAccent, size: 17,), 2),
+                      TagConfig(Image.asset("assets/images/tabbar/student_active.png",
                         width: 17,
                         color: Colors.lightBlueAccent,
                       ), 1, spacing: 2),
                     ],
                     trailingConfigs: [
-                      TrailingConfig(Text("爆款价", style: TextStyle(fontSize: 12),), 4, spacing: 3)
+                      TagConfig(Text("爆款价", style: TextStyle(fontSize: 12),), 4, spacing: 3)
                     ],
                   ),
                 ),
@@ -125,21 +63,21 @@ class TagsPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Tags(["空气炸锅", "儿童遥控飞机", "摩托车跑车", "智能手表", "电动豆浆机"],
                     crossAxisCount: 1,
-                    alignment: Alignment.centerLeft,
                     fit: FlexFit.tight,
+                    contentSpacing: 0,
                     leadingConfigs: [
-                      LeadingConfig(Icon(Icons.watch_later_outlined, size: 17,), 0, spacing: 9),
-                      LeadingConfig(Icon(Icons.watch_later_outlined, size: 17,), 1, spacing: 9),
-                      LeadingConfig(Icon(Icons.watch_later_outlined, size: 17,), 2, spacing: 9),
-                      LeadingConfig(Icon(Icons.watch_later_outlined, size: 17,), 3, spacing: 9),
-                      LeadingConfig(Icon(Icons.watch_later_outlined, size: 17,), 4, spacing: 9),
+                      TagConfig(Icon(Icons.watch_later_outlined, size: 17,), 0, spacing: 9),
+                      TagConfig(Icon(Icons.watch_later_outlined, size: 17,), 1, spacing: 9),
+                      TagConfig(Icon(Icons.watch_later_outlined, size: 17,), 2, spacing: 9),
+                      TagConfig(Icon(Icons.watch_later_outlined, size: 17,), 3, spacing: 9),
+                      TagConfig(Icon(Icons.watch_later_outlined, size: 17,), 4, spacing: 9),
                     ],
                     trailingConfigs: [
-                      TrailingConfig(Icon(Icons.close_sharp, size: 15), 0,),
-                      TrailingConfig(Icon(Icons.close_sharp, size: 15), 1,),
-                      TrailingConfig(Icon(Icons.close_sharp, size: 15), 2,),
-                      TrailingConfig(Icon(Icons.close_sharp, size: 15), 3,),
-                      TrailingConfig(Icon(Icons.close_sharp, size: 15), 4,),
+                      TagConfig(Icon(Icons.close_sharp, size: 15), 0,),
+                      TagConfig(Icon(Icons.close_sharp, size: 15), 1,),
+                      TagConfig(Icon(Icons.close_sharp, size: 15), 2,),
+                      TagConfig(Icon(Icons.close_sharp, size: 15), 3,),
+                      TagConfig(Icon(Icons.close_sharp, size: 15), 4,),
                     ],
                   ),
                 ),
@@ -152,24 +90,24 @@ class TagsPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Tags(["中国队第10金", "射手冠军玩射手吗", "马龙吹手调整状态", "今日奥运看点", "唐山大地震45周年", "IG战胜TES", "摩托车跑车", "智能手表", "车载收音机", "奥运会为何没有俄罗斯"],
                     crossAxisCount: 2,
-                    alignment: Alignment.centerLeft,
+                    contentSpacing: 0,
                     leadingConfigs: [
-                      LeadingConfig(Text("1", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 0, spacing: 10),
-                      LeadingConfig(Text("2", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 1, spacing: 10),
-                      LeadingConfig(Text("3", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 2, spacing: 10),
-                      LeadingConfig(Text("4", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 3, spacing: 10),
-                      LeadingConfig(Text("5", style: TextStyle(color: Colors.black45, fontWeight: FontWeight.w600),), 4, spacing: 10),
-                      LeadingConfig(Text("6", style: TextStyle(color: Colors.black45),), 5, spacing: 10),
-                      LeadingConfig(Text("7", style: TextStyle(color: Colors.black45),), 6, spacing: 10),
-                      LeadingConfig(Text("8", style: TextStyle(color: Colors.black45),), 7, spacing: 10),
-                      LeadingConfig(Text("9", style: TextStyle(color: Colors.black45),), 8, spacing: 10),
-                      LeadingConfig(Text("10", style: TextStyle(color: Colors.black45),), 9, spacing: 10),
+                      TagConfig(Text("1", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 0, spacing: 10),
+                      TagConfig(Text("2", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 1, spacing: 10),
+                      TagConfig(Text("3", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 2, spacing: 10),
+                      TagConfig(Text("4", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),), 3, spacing: 10),
+                      TagConfig(Text("5", style: TextStyle(color: Colors.black45, fontWeight: FontWeight.w600),), 4, spacing: 10),
+                      TagConfig(Text("6", style: TextStyle(color: Colors.black45),), 5, spacing: 10),
+                      TagConfig(Text("7", style: TextStyle(color: Colors.black45),), 6, spacing: 10),
+                      TagConfig(Text("8", style: TextStyle(color: Colors.black45),), 7, spacing: 10),
+                      TagConfig(Text("9", style: TextStyle(color: Colors.black45),), 8, spacing: 10),
+                      TagConfig(Text("10", style: TextStyle(color: Colors.black45),), 9, spacing: 10),
                     ],
                     style: TextStyle(
                         color: Colors.black87
                     ),
                     trailingConfigs: [
-                      TrailingConfig(Container(
+                      TagConfig(Container(
                         child: Text("热", style: TextStyle(color: Colors.white, fontSize: 8),),
                         width: 12,
                         height: 12,
@@ -179,7 +117,7 @@ class TagsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(2)
                         ),
                       ), 0, spacing: 5),
-                      TrailingConfig(Container(
+                      TagConfig(Container(
                         child: Text("新", style: TextStyle(color: Colors.white, fontSize: 8),),
                         width: 12,
                         height: 12,

@@ -2,133 +2,51 @@ import 'package:flutter/material.dart';
 
 /// 标签文本选中回调函数，返回选中标签下标值
 ///
-/// 单选情况下，数组元素始终为：1，多选情况下，数组元素为：选中标签下标值
+/// 单选情况下，返回数组元素始终为：当前选中的标签下标值
+///
+/// 多选情况下，返回数组元素为：所有选中的标签下标值
 typedef TagsCallback = Function(List);
 
-/// 标签文本前面的配置类
-class LeadingConfig {
+/// 标签配置类
+class TagConfig {
+  /// 根据标签的下标值，给标签添加配置组件
+  TagConfig(this.content, this.index, {
+    this.spacing = 0.0
+  });
+
   /// 内容组件
   final Widget content;
 
   /// 对应下标值
   final int index;
 
-  /// 与文本之间的间距
+  /// 与文本之间的间距，默认为：0.0
   final double spacing;
-
-  /// 根据标签的下标值，给标签文本前面添加配置组件
-  LeadingConfig(this.content, this.index, {
-    this.spacing
-  });
-}
-
-/// 标签文本后面的配置类
-class TrailingConfig {
-  /// 内容组件
-  final Widget content;
-
-  /// 对应下标值
-  final int index;
-
-  /// 与文本之间的间距
-  final double spacing;
-
-  /// 根据标签的下标值，给标签文本后面添加配置组件
-  TrailingConfig(this.content, this.index, {
-    this.spacing
-  });
 }
 
 /// 标签类
 class Tags extends StatefulWidget {
-  /// 标签文本数据
-  final List data;
-
-  /// 横轴个数
-  final int crossAxisCount;
-
-  /// 文本对齐样式，默认为：Alignment.center。只有设置 crossAxisCount 属性时，才起作用
-  final AlignmentGeometry alignment;
-
-  /// FlexFit，默认为：FlexFit.loose。只有设置 crossAxisCount 属性时，才起作用
-  final FlexFit fit;
-
-  /// 标签文本样式
-  final TextStyle style;
-
-  /// 标签选中时的文本样式
-  final TextStyle selectedStyle;
-
-  /// 标签文本前面配置类集合
-  final List<LeadingConfig> leadingConfigs;
-
-  /// 标签文本后面配置类集合
-  final List<TrailingConfig> trailingConfigs;
-
-  /// 标签内容距左右边距的间距，默认为：15.0
-  final double contentSpacing;
-
-  /// 标签高度，默认为：30.0
-  final double height;
-
-  /// 标签之间左右的间距，默认为：15.0
-  final double spacing;
-
-  /// 标签之间上下的间距，默认为：15.0
-  final double runSpacing;
-
-  /// 标签背景颜色，默认为：const Color(0xfff9f9f9)
-  final Color backgroundColor;
-
-  /// 标签选中时的背景颜色
-  final Color selectedBackgroundColor;
-
-  /// 标签圆角
-  final BorderRadius borderRadius;
-
-  /// 标签边框宽度，默认为：1.0
-  final double borderWidth;
-
-  /// 标签边框颜色，默认为：Colors.transparent
-  final Color borderColor;
-
-  /// 标签选中时的边框颜色，默认为：Colors.transparent
-  final Color selectedBorderColor;
-
-  /// 默认选中的标签下标值。单选情况下，如果设置了多个下标值会默认选取第一个下标值
-  final List<int> indexes;
-
-  /// 标签是否为多选，默认为：false 单选
-  final bool multiSelect;
-
-  /// 标签是否能够选择，默认为：true 可选
-  final bool ableSelect;
-
-  /// 标签点击回调方法
-  final TagsCallback onTap;
-
   /// 支持单选（默认）和多选【multiSelect = true】，可选中（默认）和不可选中【ableSelect = false】
   ///
-  /// 支持流水布局（默认）和固定布局，设置每行标签个数【crossAxisCount】
+  /// 支持流水布局（默认）和固定布局【例如：crossAxisCount = 2】
   ///
   /// 支持根据标签下标值给标签文本前后添加配置组件【leadingConfigs、trailingConfigs】
-  const Tags(
-    this.data, {
+  const Tags(this.data, {
     Key key,
     this.crossAxisCount = 0,
-    this.alignment = Alignment.center,
+    this.alignment = Alignment.centerLeft,
     this.fit = FlexFit.loose,
-    this.style,
-    this.selectedStyle,
+    this.style = const TextStyle(color: Colors.black),
+    this.selectedStyle = const TextStyle(color: Colors.black),
     this.contentSpacing = 15.0,
     this.leadingConfigs = const [],
     this.trailingConfigs = const [],
     this.height = 30.0,
     this.spacing = 15.0,
     this.runSpacing = 15.0,
-    this.backgroundColor = const Color(0xfff9f9f9),
-    this.selectedBackgroundColor,
-    this.borderRadius,
+    this.backgroundColor = Colors.transparent,
+    this.selectedBackgroundColor = Colors.transparent,
+    this.borderRadius = const BorderRadius.all(Radius.circular(0.0)),
     this.borderWidth = 1.0,
     this.borderColor = Colors.transparent,
     this.selectedBorderColor = Colors.transparent,
@@ -138,6 +56,82 @@ class Tags extends StatefulWidget {
     this.onTap,
   });
 
+  /// 标签文本数据
+  final List data;
+
+  /// 横轴标签个数，默认为：0，也就是流水布局样式
+  final int crossAxisCount;
+
+  /// 文本对齐样式，默认为：Alignment.centerLeft
+  ///
+  /// 只有设置横轴标签个数【crossAxisCount】时，才起作用
+  final AlignmentGeometry alignment;
+
+  /// FlexFit，默认为：FlexFit.loose
+  ///
+  /// 只有设置横轴标签个数【crossAxisCount】时，才起作用
+  final FlexFit fit;
+
+  /// 标签文本样式，默认为：const TextStyle(color: Colors.black)
+  final TextStyle style;
+
+  /// 选中时的标签文本样式，默认为：const TextStyle(color: Colors.black)
+  final TextStyle selectedStyle;
+
+  /// 标签文本前面配置类数组
+  final List<TagConfig> leadingConfigs;
+
+  /// 标签文本后面配置类数组
+  final List<TagConfig> trailingConfigs;
+
+  /// 标签内容距左右边距的距离，默认为：15.0
+  final double contentSpacing;
+
+  /// 标签高度，默认为：30.0
+  final double height;
+
+  /// 左右标签间的距离，默认为：15.0
+  final double spacing;
+
+  /// 上下标签间的距离，默认为：15.0
+  final double runSpacing;
+
+  /// 标签背景颜色，默认为：Colors.transparent
+  final Color backgroundColor;
+
+  /// 选中时的标签背景颜色，默认为：Colors.transparent
+  final Color selectedBackgroundColor;
+
+  /// 标签圆角，默认为：const BorderRadius.all(Radius.circular(0.0))
+  final BorderRadius borderRadius;
+
+  /// 标签的边框宽度，默认为：1.0
+  final double borderWidth;
+
+  /// 标签边框颜色，默认为：Colors.transparent
+  final Color borderColor;
+
+  /// 选中时的标签边框颜色，默认为：Colors.transparent
+  final Color selectedBorderColor;
+
+  /// 默认选中的标签下标值
+  ///
+  /// 单选情况下，如果设置多个下标值会默认选取第一个元素
+  final List<int> indexes;
+
+  /// 标签是否为多选，默认为：false 单选
+  final bool multiSelect;
+
+  /// 标签是否能够选择，默认为：true 可选
+  final bool ableSelect;
+
+  /// 标签点击回调响应事件
+  ///
+  /// 单选情况下，返回数组元素始终为：当前选中的标签下标值
+  ///
+  /// 多选情况下，返回数组元素为：所有选中的标签下标值
+  final TagsCallback onTap;
+
   @override
   State<StatefulWidget> createState() {
     return _TagsState();
@@ -146,9 +140,9 @@ class Tags extends StatefulWidget {
 
 class _TagsState extends State<Tags> {
   List<int> _tempIndexes = [];
-  List<LeadingConfig> _tempLeadingConfigModels = [];
+  List<TagConfig> _tempLeadingConfigModels = [];
   List<int> _tempLeadingConfigIndexes = [];
-  List<TrailingConfig> _tempTrailingConfigModels = [];
+  List<TagConfig> _tempTrailingConfigModels = [];
   List<int> _tempTrailingConfigIndexes = [];
 
   @override
@@ -165,7 +159,7 @@ class _TagsState extends State<Tags> {
 
     if (widget.leadingConfigs.isNotEmpty) {
       widget.leadingConfigs.forEach((element) {
-        LeadingConfig model = element;
+        TagConfig model = element;
         _tempLeadingConfigModels.add(model);
         _tempLeadingConfigIndexes.add(model.index);
       });
@@ -173,7 +167,7 @@ class _TagsState extends State<Tags> {
 
     if (widget.trailingConfigs.isNotEmpty) {
       widget.trailingConfigs.forEach((element) {
-        TrailingConfig model = element;
+        TagConfig model = element;
         _tempTrailingConfigModels.add(model);
         _tempTrailingConfigIndexes.add(model.index);
       });
@@ -221,6 +215,7 @@ class _TagsState extends State<Tags> {
         double width = constrains.maxWidth;
         double eachTagWidth = (width - (widget.spacing * (widget.crossAxisCount - 1))) / widget.crossAxisCount;
         return Container(
+          padding: EdgeInsets.symmetric(horizontal: widget.contentSpacing),
           width: eachTagWidth,
           height: widget.height,
           alignment: widget.alignment,
@@ -282,7 +277,7 @@ class _TagsState extends State<Tags> {
   Widget leading(int index) {
     /// 获取当前 index 所对应的元素处在 _tempLeadingConfigIndexes 数组中的下标值
     int tempIndex = _tempLeadingConfigIndexes.indexOf(index);
-    LeadingConfig model = _tempLeadingConfigModels[tempIndex];
+    TagConfig model = _tempLeadingConfigModels[tempIndex];
     return Row(
       children: [
         model.content,
@@ -293,7 +288,7 @@ class _TagsState extends State<Tags> {
 
   Widget trailing(int index) {
     int tempIndex = _tempTrailingConfigIndexes.indexOf(index);
-    TrailingConfig model = _tempTrailingConfigModels[tempIndex];
+    TagConfig model = _tempTrailingConfigModels[tempIndex];
     return Row(
       children: [
         SizedBox(width: model.spacing),

@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 
 /// 文本配置类
 class TextConfig {
+  const TextConfig({
+    this.style,
+    this.textAlign,
+    this.overflow,
+    this.maxLines,
+    this.indent = 0.0,
+    this.endIndent = 0.0,
+  });
+
   /// 样式
   final TextStyle style;
 
@@ -19,25 +28,34 @@ class TextConfig {
 
   /// 右边距离，默认为：0.0
   final double endIndent;
-
-  const TextConfig({
-    this.style,
-    this.textAlign,
-    this.overflow,
-    this.maxLines,
-    this.indent = 0.0,
-    this.endIndent = 0.0,
-  });
 }
 
-/// GestureDetector、Container、Flexible 包裹下的 Text
-///
-/// 具有 GestureDetector 的 onTap 属性
-///
-/// 具有 Container 的 width、height、margin、padding、alignment、color、borderRadius、border、gradient 属性
-///
-/// 具有 Flexible 的 fit 属性
 class FlexibleText extends StatelessWidget {
+  /// GestureDetector、Container、Flexible 包裹下的 Text
+  ///
+  /// 具有 GestureDetector 的 onTap 属性
+  ///
+  /// 具有 Container 的 width、height、margin、padding、alignment、color、borderRadius、border、gradient 属性
+  ///
+  /// 具有 Flexible 的 fit 属性
+  const FlexibleText(this.data, {
+    Key key,
+    this.fit = FlexFit.loose,
+    this.config = const TextConfig(),
+    this.leading,
+    this.trailing,
+    this.color,
+    this.width,
+    this.height,
+    this.margin,
+    this.padding,
+    this.alignment = Alignment.center,
+    this.borderRadius,
+    this.border,
+    this.gradient,
+    this.onTap,
+  });
+
   /// FlexFit，默认为：FlexFit.loose
   final FlexFit fit;
 
@@ -82,25 +100,6 @@ class FlexibleText extends StatelessWidget {
   
   /// 点击回调函数
   final VoidCallback onTap;
-
-  const FlexibleText(
-    this.data, {
-    Key key,
-    this.fit = FlexFit.loose,
-    this.config = const TextConfig(),
-    this.leading,
-    this.trailing,
-    this.color,
-    this.width,
-    this.height,
-    this.margin,
-    this.padding,
-    this.alignment = Alignment.center,
-    this.borderRadius,
-    this.border,
-    this.gradient,
-    this.onTap,
-  });
   
   @override
   Widget build(BuildContext context) {
